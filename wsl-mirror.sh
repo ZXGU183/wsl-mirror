@@ -53,11 +53,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script
+# https://askubuntu.com/a/969923
 # write activation script to .bash_profile to auto-start nvm
 echo -e \
-"export NVM_DIR=\"\$([ -z \"\${XDG_CONFIG_HOME-}\" ] && printf %s \"\${HOME}/.nvm\" || printf %s \"\${XDG_CONFIG_HOME}/nvm\")\"\
+"\nexport NVM_DIR=\"\$([ -z \"\${XDG_CONFIG_HOME-}\" ] && printf %s \"\${HOME}/.nvm\" || printf %s \"\${XDG_CONFIG_HOME}/nvm\")\"\
 \n[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\" # This loads nvm" \
-> ~/.bash_profile
+>> ~/.bashrc
 
 # install node in nvm
 nvm install --lts
