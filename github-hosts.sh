@@ -14,7 +14,7 @@ sudo sed -i '/# GitHub Hosts Start/,/# GitHub Hosts End/d' /etc/hosts
     echo "# GitHub Hosts Start"
     echo "# Updated: $(date)"
     curl -sSL https://raw.hellogithub.com/hosts.json | \
-        jq -r '.hosts[] | "\(.ip) \(.domain)"'
+        jq -r '.[] | "\(.[0]) \(.[1])"'
     echo "# GitHub Hosts End"
 } | sudo tee -a /etc/hosts > /dev/null
 
