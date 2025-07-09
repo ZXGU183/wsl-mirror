@@ -13,7 +13,7 @@ sudo sed -i '/# GitHub Hosts Start/,/# GitHub Hosts End/d' /etc/hosts
 {
     echo "# GitHub Hosts Start"
     echo "# Updated: $(date)"
-    curl -sSL https://raw.hellogithub.com/hosts.json | \
+    curl -sSL --connect-timeout 10 --retry 3 --retry-delay 5 https://raw.hellogithub.com/hosts.json | \
         jq -r '.[] | "\(.[0]) \(.[1])"'
     echo "# GitHub Hosts End"
 } | sudo tee -a /etc/hosts > /dev/null
@@ -29,7 +29,7 @@ sudo chmod +x /usr/local/bin/update_github_hosts
 
 # 添加自动任务和日志记录
 COMMAND_TO_RUN="/usr/local/bin/update_github_hosts"
-CRON_JOB="0 * * * * for i in {1..3}; do ${COMMAND_TO_RUN} && break || sleep 30; done >> /var/log/github-hosts.log 2>&1"
+CRON_JOB="0 * * * * ${COMMAND_TO_RUN} >> /var/log/github-hosts.log 2>&1"
 
 # 移除旧的定时任务（如果存在），然后添加新的，以防止重复
 (sudo crontab -l 2>/dev/null | grep -v -F "${COMMAND_TO_RUN}"; echo "${CRON_JOB}") | sudo crontab -
