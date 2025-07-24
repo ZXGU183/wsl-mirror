@@ -2,10 +2,16 @@
 
 适用于以任何形式运行的 debian 系 Linux 发行版
 
-## 使用方式
+## 安装方式
 
 ```shell
 bash github-hosts.sh
+```
+
+### 安装后手动执行
+
+```shell
+sudo bash /usr/local/bin/update_github_hosts
 ```
 
 ## WSL 用户注意
